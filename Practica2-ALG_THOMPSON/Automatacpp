@@ -1,0 +1,12 @@
+#include "Automata.hpp"
+#include <iostream>
+#include <map>
+#include<vector>
+
+using namespace std;
+        
+        void Automata::mostrarAutomata(){
+            cout<<"Alfabeto:{ ";
+            for(char caracter:this-> alfabeto){
+               cout<<caracter<<"   ";
+            }
