@@ -67,4 +67,9 @@ AFN construyeAFN(vector<char> expresionPostfija){
             numNodos+=2;
        }  
     }
+     int tamanio=refAutomata.size();
+     if (existeEnAlfabeto(refAutomata[0].alfabeto,'E')){
+          remove(refAutomata[0].alfabeto.begin(),refAutomata[0].alfabeto.end(),'E');
+     }
+      return refAutomata[tamanio-1];
   
