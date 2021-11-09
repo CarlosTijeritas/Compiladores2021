@@ -25,7 +25,18 @@ AFN unir(AFN pReferencia,AFN sReferencia,int n){
         return pReferencia;
 }
 
+AFN concatenar(AFN pReferencia,AFN sReferencia,int n){
+      
+       pReferencia.nodos.insert(pReferencia.nodos.end(),sReferencia.nodos.begin(),sReferencia.nodos.end());
+       pReferencia.alfabeto.insert(pReferencia.alfabeto.end(),sReferencia.alfabeto.begin(),sReferencia.alfabeto.end()); 
 
+       pReferencia.transiciones[pReferencia.estadoFinal[0]]=sReferencia.transiciones[sReferencia.estadoInicial];
+      
+       pReferencia.estadoFinal[0]=sReferencia.estadoFinal[0];
+       pReferencia.nodos.erase(remove(pReferencia.nodos.begin(), pReferencia.nodos.end(), sReferencia.estadoInicial), pReferencia.nodos.end());
+      
+       return pReferencia;
+   }
 
 
 AFN construyeAFN(vector<char> expresionPostfija){
