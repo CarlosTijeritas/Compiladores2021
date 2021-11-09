@@ -24,7 +24,6 @@ AFN unir(AFN pReferencia,AFN sReferencia,int n){
         pReferencia.estadoFinal[0]=pReferencia.nodos[numNodos-1];
         return pReferencia;
 }
-
 AFN concatenar(AFN pReferencia,AFN sReferencia,int n){
       
        pReferencia.nodos.insert(pReferencia.nodos.end(),sReferencia.nodos.begin(),sReferencia.nodos.end());
@@ -37,8 +36,21 @@ AFN concatenar(AFN pReferencia,AFN sReferencia,int n){
       
        return pReferencia;
    }
-
-
+ AFN cerradura(AFN pReferencia,int n){
+        pReferencia.nodos.push_back(n);
+        pReferencia.nodos.push_back(n+1);
+        map<int, string> transiciones_epsilon;
+        int numNodos=pReferencia.nodos.size();
+        string transicion_01="E:[" +to_string(pReferencia.estadoInicial)+","+to_string(pReferencia.nodos[numNodos-1])+"]";
+        transiciones_epsilon.insert(make_pair(pReferencia.nodos[numNodos-2],transicion_01));
+        string transicion_02="E :[" +to_string(pReferencia.estadoInicial)+","+to_string(pReferencia.nodos[numNodos-1])+"]";
+        transiciones_epsilon.insert(make_pair(pReferencia.estadoFinal[0],transicion_02));
+        pReferencia.transiciones.merge(transiciones_epsilon);
+        pReferencia.estadoInicial=pReferencia.nodos[numNodos-2];
+        pReferencia.estadoFinal[0]=pReferencia.nodos[numNodos-1];
+        return pReferencia;
+    }
+     
 AFN construyeAFN(vector<char> expresionPostfija){
     int numNodos=0;
 
@@ -83,4 +95,4 @@ AFN construyeAFN(vector<char> expresionPostfija){
           remove(refAutomata[0].alfabeto.begin(),refAutomata[0].alfabeto.end(),'E');
      }
       return refAutomata[tamanio-1];
-  
+}
