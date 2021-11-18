@@ -1,12 +1,20 @@
 #include <iostream>
 #include "ConstruccionAFN.hpp"
+#include "Postfija.hpp"
 using namespace std;
 
 int main(){
   
-  vector<char> expresion={'a', 'b', '.', '*', 'c', '.', 'd', '|'};
-  auto afn=construyeAFN(expresion) ;
+  vector<char> expresion={'(','a','b',')','*','c','|','d'};
+  cout<<"La ER solo puede contener los siguientes caracteres: [a-z], '(','|',')','*'"<<endl;
+  cout<<"La expresion regular a transformar a AFN por Algoritmo de Thompson es: ";
+  for(auto car:expresion){
+    cout<<car;
+  }
+  cout<<endl;
+  
+  auto afn=construyeAFN(convertirPostfija(expresion));
   afn.mostrarAutomata();
-  //afn.convertirAFN();
+  
   return 0;
 }
