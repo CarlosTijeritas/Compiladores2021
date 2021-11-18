@@ -10,3 +10,9 @@ Postfija.o: Postfija.cpp
 	g++ -c Postfija.cpp -Wall
 ConstruccionAFN.o: ConstruccionAFN.cpp
 	g++ -c ConstruccionAFN.cpp -Wall
+clean:
+	rm main.o Automata.o AFN.o Postfija.o ConstruccionAFN.o a.out
+run:
+	./a.out
+indent:
+	indent main.cpp AFN.cpp Postfija.cpp ConstruccionAFN.cpp Automata.hpp AFN.hpp Postfija.hpp ConstruccionAFN.hpp  -linux
