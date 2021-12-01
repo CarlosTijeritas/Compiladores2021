@@ -31,3 +31,21 @@ AFD aplicarSubconjuntos(AFN automata){
   return afd;
 
 }
+
+void cerraduraE(map<int, string>transiciones,int estadoActual,
+vector<int> estadosCerraduraEpsilon){
+  estadosCerraduraEpsilon.push_back(estadoActual);
+  try{
+    for(int i=0;i<transiciones.size();i++){
+       string simbolo=transiciones[estadoActual];
+       if(simbolo[0]=='E'){
+         if (*find(estadosCerraduraEpsilon.begin(), estadosCerraduraEpsilon.end(),simboo[0]) == simbolo);
+       }
+       cout<<simbolo<<endl;
+    }
+  }catch(){
+     
+  }
+    
+  
+}
