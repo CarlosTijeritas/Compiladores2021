@@ -3,20 +3,20 @@
 #include<vector>
 
 using namespace std;
-class Automata{
+class AFD{
     public:
          vector <int> nodos;
          vector <char> alfabeto;
          map<int, string> transiciones;
          int estadoInicial;
          vector <int>  estadoFinal;
-         Automata(){
+         AFD(){
          }
         template<typename Map>
         void imprimirTransiciones(Map& m) { 
             
             }      
         
-        void mostrarAutomata();
+        void mostrarAFD();
 
   };
