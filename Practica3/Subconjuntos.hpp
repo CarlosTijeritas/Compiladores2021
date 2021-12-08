@@ -1,51 +1,58 @@
-#inxlude<iostream>
+#include<iostream>
 #include<vector>
 #include<map>
+#include <algorithm>
+
 
 using namespace std;
 
-AFD aplicarSubconjuntos(AFN automata){
+void cerraduraE(map<int, string>transiciones,int estadoActual,
+vector<int> A){
+  A.push_back(estadoActual);
+  try{
+        auto iter = transiciones.begin();
+        while (iter != transiciones.end()) {
+          auto transicion=iter->second;
+          if(iter->first==estadoActual && transicion[0]=='E' ){
+             if (*find(A.begin(), A.end(),iter->first ) != iter->first) {
+                 cerraduraE(transiciones,iter->first,A);
+            } 
+          }
+          ++iter;
+      }
+  }catch(...){
+     
+  }    
+}
+void calcularNucleos(AFN afn,vector<string> cerraduraNucleo,vector<int>nucleos,int posicionEpsilon,Automata afd){
+
+}
+
+Automata aplicarSubconjuntos(AFN afn){
   vector<int> A; //Vector que contendra la cerradura del estadoInicial
   vector<int> nucleos;
-  vector<int> cerradurasNucleo; //cerradurasEpsilon de cada nucleo
-  nucleos.push_back(AFN.estadoInicial);
-  cerraduraE(AFN.transiciones,AFN.estadoInicial,A);
-  copy(A.begin(), A.end(), cerraduraE.begin());
+  vector<string> cerraduraNucleo; //cerradurasEpsilon de cada nucleo
+  nucleos.push_back(afn.estadoInicial);
+  cerraduraE(afn.transiciones,afn.estadoInicial,A);
+  copy(A.begin(), A.end(), cerraduraNucleo.begin());
   int posicionEpsilon=0;
-  AFD afd=new AFD();
-  calcularNucleos(AFN,cerraduraNucleos,nucleos,posicionEpsilon,afd);
-  copy(AFN.alfabeto.begin(),AFN.alfabeto.end(),afd.alfabeto.begin());
-  auto iter = transiciones.begin();
-  while (iter != transiciones.end()) {
+  Automata afd;
+  calcularNucleos(afn,cerraduraNucleo,nucleos,posicionEpsilon,afd);
+  copy(afn.alfabeto.begin(),afn.alfabeto.end(),afd.alfabeto.begin());
+  auto iter = afd.transiciones.begin();
+  while (iter != afd.transiciones.end()) {
       afd.nodos.push_back(iter->first);
-      for(auto elemento:cerraduraNucleo[iter->first]){
-        if(elemento==AFN.estadoInicial){
+      for(char elemento:cerraduraNucleo[iter->first]){
+          if(int(elemento)==afn.estadoInicial){
           afd.estadoInicial=iter->first;
-        }
-        if(elemento==AFN.estadoFinal){
+          }
+          if(int(elemento)==afn.estadoFinal[0]){
           afd.estadoFinal.push_back(iter->first);
-        }
+          }
+          
       }
       ++iter;
       }
   return afd;
 
-}
-
-void cerraduraE(map<int, string>transiciones,int estadoActual,
-vector<int> estadosCerraduraEpsilon){
-  estadosCerraduraEpsilon.push_back(estadoActual);
-  try{
-    for(int i=0;i<transiciones.size();i++){
-       string simbolo=transiciones[estadoActual];
-       if(simbolo[0]=='E'){
-         if (*find(estadosCerraduraEpsilon.begin(), estadosCerraduraEpsilon.end(),simboo[0]) == simbolo);
-       }
-       cout<<simbolo<<endl;
-    }
-  }catch(){
-     
-  }
-    
-  
 }
