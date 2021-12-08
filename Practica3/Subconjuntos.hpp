@@ -27,6 +27,27 @@ vector<int> A){
 void calcularNucleos(AFN afn,vector<string> cerraduraNucleo,vector<int>nucleos,int posicionEpsilon,Automata afd){
 
 }
+vector<int>mover(map<int,string>transiciones,string estados,char simbolo){ //checar casting
+  vector<int> posibles;
+  
+  for(auto estado:estados){
+    auto iter = transiciones.begin();
+    while (iter != transiciones.end()) {
+          if(iter->first==int(estado)){
+             string aux=iter->second;
+             if(aux[4]!=',' and aux[4]!=']'){
+                string estadoPosible=aux[3]+aux[4];
+                posibles.push_back(int(estadoPosible));
+              }else{
+                posibles.push_back(int(aux[3]));
+              }
+          }
+      }
+      ++iter;
+      }
+  sort(posibles.begin(),posibles.end());
+  return posibles;
+}
 
 Automata aplicarSubconjuntos(AFN afn){
   vector<int> A; //Vector que contendra la cerradura del estadoInicial
