@@ -24,10 +24,7 @@ vector<int> A){
      
   }    
 }
-void calcularNucleos(AFN afn,vector<string> cerraduraNucleo,vector<int>nucleos,int posicionEpsilon,Automata afd){
-
-}
-vector<int>mover(map<int,string>transiciones,string estados,char simbolo){ //checar casting
+vector<int>mover(map<int,string>transiciones,string estados,char simbolo){
   vector<int> posibles;
   
   for(auto estado:estados){
@@ -35,11 +32,10 @@ vector<int>mover(map<int,string>transiciones,string estados,char simbolo){ //che
     while (iter != transiciones.end()) {
           if(iter->first==int(estado)){
              string aux=iter->second;
+             int estadoPosible;
              if(aux[4]!=',' and aux[4]!=']'){
-                string estadoPosible=aux[3]+aux[4];
-                posibles.push_back(int(estadoPosible));
-              }else{
-                posibles.push_back(int(aux[3]));
+                estadoPosible=int(aux[3]);
+                posibles.push_back(estadoPosible);
               }
           }
       }
@@ -47,6 +43,35 @@ vector<int>mover(map<int,string>transiciones,string estados,char simbolo){ //che
       }
   sort(posibles.begin(),posibles.end());
   return posibles;
+}
+void calcularNucleos(AFN afn,vector<string> cerraduraNucleo,vector<int>nucleos,int posicionEpsilon,Automata afd){
+  map<int,string> aux;
+  bool bandera=false;
+  for(auto simbolo:afn.alfabeto){
+      auto posiblesMover=mover(afn.transiciones,cerraduraNucleo[posicionEpsilon],simbolo);
+      int indicePosiblesMover;
+      for(int i=0;i<posiblesMover.size();i++){
+           for(int nucleo:nucleos){
+                if(posiblesMover[i]==nucleo){
+                    bandera=true;
+                    indicePosiblesMover++;
+                    break;
+                }
+                indicePosiblesMover++;
+            }
+          if(bandera==false){
+            nucleos.push_back(posiblesMover[i]);
+            vector<int>cerraduraParcial;
+            cerraduraE(afn.transiciones,posiblesMover[i],cerraduraParcial);
+            for(int j=0;j<cerraduraParcial.size();j++){
+                cerraduraNucleo.push_back(str(cerraduraParcial));
+            }
+            calcularNucleos(afn,cerraduraNucleo,nucleos,cerraduraNucleo.size()-1,afd);
+          }
+      }
+      aux.insert(make_pair(simbolo,indicePosiblesMover));
+  }
+  afd.transiciones.insert(make_pair(posicionEpsilon,aux));
 }
 
 Automata aplicarSubconjuntos(AFN afn){
@@ -77,3 +102,6 @@ Automata aplicarSubconjuntos(AFN afn){
   return afd;
 
 }
+
+
+
