@@ -1,12 +1,15 @@
+/*EJERCICIO ANALISIS SINTACTICO POR DESCENSO RECURSIVO*/
 /* P->aXPa
    P->bPX
-   P->dX
-   X->c
+   P->cX
+   X->d
 */
-//checar error***
+/*ENTRADA: UNA CADENA
+  SALIDA: VALIDACION DE LA CADENA(SI SE ACEPTO NO IMPRIME NADA,EN CASO CONTRARIO MUESTRA UN MENSAJE DE ERROR)*/
+
 #include<iostream>
 using namespace std;
-char entrada[100]="acdc";
+char entrada[100]="adcda";
 int actual=0;
 void consumir(char caracter){
 	if(caracter==entrada[actual]){
@@ -17,16 +20,7 @@ void consumir(char caracter){
 	}
 }
 void X(void){
-  	switch(entrada[actual]){
-		/*seleccionamos la produccion*/
-		case 'c':
-		    consumir('c');
-		   
-		    break;
-    default:
-      exit(-1);
-			
-	}
+		    consumir('d');
 }
 void P(void){
 	switch(entrada[actual]){
@@ -39,11 +33,13 @@ void P(void){
 		    consumir('b');P();X();
 		    break;
 		case 'c':
-		    X();
+		    consumir('c');X();
 		    break;
     case 'd':
-        consumir('d');P();
+        consumir('d');
+        break;
     default:
+      cout<<"Ocurrio un Error"<<endl;
       exit(-1);
 			
 	}
